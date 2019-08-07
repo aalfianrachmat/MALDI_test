@@ -1,5 +1,5 @@
 %{
-Date     : 30-07-2019
+Date     : 07-08-2019
 Author   : Alfian Rachmat Akbar (System Engineer)
 
 Objective: This program is used to calculate the pumping time of ASTA stage
@@ -67,6 +67,13 @@ pressure_4hrs = pressure(find(timeDuration == 60*60*4));
 pressure_final= pressure(end);
 duration_final= duration(0,0,timeDuration(end));
 
+% Print to console
+pressure_5e06 = find(pressure < 5e-6);
+duration_5e06 = duration(0,pressure_5e06(1),0)
+pressure_3hrs = pressure(180)
+pressure_4hrs = pressure(240)
+pressure_final= pressure(end)
+duration_final= duration(0,length(pressure),0)
 
 %% Plot the pressure
 figure(1)
@@ -75,10 +82,19 @@ xlabel('Time [s]');
 ylabel('Air pressure [mbar]');
 grid on
 
-%%
-pressure_5e06 = find(pressure < 5e-6);
-duration_5e06 = duration(0,pressure_5e06(1),0)
-pressure_3hrs = pressure(180)
-pressure_4hrs = pressure(240)
-pressure_final= pressure(end)
-duration_final= duration(0,length(pressure),0)
+%% Save Result
+%--------------------------------------------------------------------------
+% Create unique name
+time_stamp = string(regexp(lower(fileName), '20[_-0-9]+[0-9]', 'match'));
+proto_id   = string(regexp(lower(fileName), 'proto[_0-9]+[0-9]', 'match'));
+test_id    = string(regexp(lower(fileName), 'tc[0-9]+', 'match'));
+% Create Directory
+mkdir(pathName, 'Result');
+
+% Save file
+save_name= join(string({test_id, proto_id, time_stamp}), '_');
+save_name= char(save_name);
+save_dir = fullfile(pathName,'Result','\',save_name);
+
+save(save_dir); % Save workspace
+saveas(gcf, save_dir); % Save figure

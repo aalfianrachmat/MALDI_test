@@ -80,7 +80,6 @@ test_id    = string(regexp(lower(fileName), 'tc[0-9]+', 'match'));
 mkdir(pathName, 'Result');
 
 % Save file
-space = '_';
 save_name= join(string({test_id, proto_id, axis_name, time_stamp}), '_');
 save_name= char(save_name);
 save_dir = fullfile(pathName,'Result','\',save_name);
