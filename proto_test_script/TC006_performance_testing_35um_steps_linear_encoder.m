@@ -73,8 +73,8 @@ shg;
 %% Save Result
 %--------------------------------------------------------------------------
 % Create unique name
-time_stamp = fileName(end-length('yyyy-mm-dd_HH-MM-SS.csv'):end-length('.csv'));
-proto_id   = string(regexp(lower(pathName), 'proto[_0-9]+', 'match'));
+time_stamp = string(regexp(lower(fileName), '20[_-0-9]+[0-9]', 'match'));
+proto_id   = string(regexp(lower(fileName), 'proto[_0-9]+[0-9]', 'match'));
 test_id    = string(regexp(lower(fileName), 'tc[0-9]+', 'match'));
 % Create Directory
 mkdir(pathName, 'Result');
