@@ -81,7 +81,7 @@ mkdir(pathName, 'Result');
 
 % Save file
 space = '_';
-save_name= test_id + space + proto_id + space + axis_name + space + time_stamp;
+save_name= join(string({test_id, proto_id, axis_name, time_stamp}), '_');
 save_name= char(save_name);
 save_dir = fullfile(pathName,'Result','\',save_name);
 
