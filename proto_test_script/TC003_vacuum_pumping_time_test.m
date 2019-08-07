@@ -50,6 +50,8 @@ samplingTime = timeDuration(2) - timeDuration(1);
 samplingTime = seconds(samplingTime); 
 % Create linear array of sampling time in second
 timeDuration = samplingTime * (1:1:length(pressure));
+
+
 %% Process the data
 %--------------------------------------------------------------------------
 % Find the sampling data where the pressure < 5e-6 mbar
@@ -68,12 +70,12 @@ pressure_final= pressure(end);
 duration_final= duration(0,0,timeDuration(end));
 
 % Print to console
-pressure_5e06 = find(pressure < 5e-6);
-duration_5e06 = duration(0,pressure_5e06(1),0)
-pressure_3hrs = pressure(180)
-pressure_4hrs = pressure(240)
-pressure_final= pressure(end)
-duration_final= duration(0,length(pressure),0)
+disp(pressure_5e06) 
+disp(duration_5e06) 
+disp(pressure_3hrs) 
+disp(pressure_4hrs) 
+disp(pressure_final)
+disp(duration_final)
 
 %% Plot the pressure
 figure(1)
