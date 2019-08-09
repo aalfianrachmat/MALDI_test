@@ -19,6 +19,7 @@ clc; clear all; close all;
 % Import data
 [fileName, pathName, ] = uigetfile('*.csv', 'Select the file');
 fileLocation = fullfile(pathName, fileName);
+fileLocation  = func_removeWhitespaceFromText(fileLocation);
 fileID   = fopen(fileLocation, 'r');
 data     = func_readGraphtecTemp(fileID);
 fclose(fileID);

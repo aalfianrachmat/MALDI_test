@@ -33,7 +33,7 @@ function T = func_readGraphtecTemp(fileID)
         read_line_split = split(lower(read_line), ',');
         
         % Find the sampling time
-        if string(read_line_split(1)) == string('sampling')
+        if regexp(read_line_split(1), 'sampling', 'match') == string('sampling')
            dataFrame.dt   =  str2double(regexp(read_line_split(2), '[0-9]+', 'match'));
            dataFrame.unit =  regexp(read_line_split(2), '[a-z]+', 'match');
            if string(dataFrame.unit) == string('ms')
@@ -54,7 +54,7 @@ function T = func_readGraphtecTemp(fileID)
                  'channel',M(char(string(n_channel)))}),'.')),...
                  '=', 'match', ';']);
         end
-        if read_line_split(1) == string(1)
+        if str2double(read_line_split(1)) == double(1)
             measrow = iter;
             dataFrame.measrow     = measrow;
             dataFrame.num_channel = n_channel;
