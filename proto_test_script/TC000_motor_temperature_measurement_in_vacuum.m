@@ -20,8 +20,7 @@ clc; clear all; close all;
 [fileName, pathName, ] = uigetfile('*.csv', 'Select the file');
 fileLocation = fullfile(pathName, fileName);
 fileID   = fopen(fileLocation, 'r');
-sampling = 0.1; % Sampling 100ms
-data     = func_readGraphtecTemp(fileID, 0.1);
+data     = func_readGraphtecTemp(fileID);
 fclose(fileID);
 
 %% Plot the temperature

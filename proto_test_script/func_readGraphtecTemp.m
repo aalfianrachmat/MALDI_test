@@ -12,7 +12,7 @@ Outputs  : The output of this program:
            1. Table containg temperature measurement
 %}
 
-function T = func_readGraphtecTemp(fileID, dt)
+function T = func_readGraphtecTemp(fileID)
      M = containers.Map({'1', '2', '3', '4', '5', '6', '7', '8', '9', '10'},...
                         {'one', 'two', 'three', 'four', 'five', 'six',...
                         'seven', 'eight', 'nine', 'ten'});
@@ -31,6 +31,19 @@ function T = func_readGraphtecTemp(fileID, dt)
         
         % Convert the string to lower and split them
         read_line_split = split(lower(read_line), ',');
+        
+        % Find the sampling time
+        if string(read_line_split(1)) == string('sampling')
+           dataFrame.dt   =  str2double(regexp(read_line_split(2), '[0-9]+', 'match'));
+           dataFrame.unit =  regexp(read_line_split(2), '[a-z]+', 'match');
+           if string(dataFrame.unit) == string('ms')
+               dataFrame.dt = dataFrame.dt/1000;
+           elseif string(dataFrame.unit) == string('s')
+               dataFrame.dt = dataFrame.dt;
+           else
+               error('Sampling time is not defined');
+           end
+        end
         
         % Find row index where CH is defined and calculate how many
         % channels are being used
@@ -61,7 +74,7 @@ function T = func_readGraphtecTemp(fileID, dt)
     T = table;
     T.index= dataFrame.data{1,1};
     T.date = dataFrame.data{1,2};
-    T.time = T.index * dt;
+    T.time = T.index * dataFrame.dt;
     for i=4:length(dataFrame.data)
         channel_name = char(eval(['dataFrame.channel.',...
                                   char(M(num2str(i-3)))]));
